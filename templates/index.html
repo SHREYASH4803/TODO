@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreyash Pawar_Assignment</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+       
+        <div class="header">
+            <h1 class="app-title">To-Do App</h1>
+            <form action="/todos/delete_all" method="POST" class="delete-all-form">
+                <button type="submit" class="btn delete-all-btn">Delete All Tasks</button>
+            </form>
+        </div>
+
+       
+        <div class="task-form-container">
+            <form action="/todos" method="POST" class="add-task-form">
+                <input type="text" name="title" placeholder="Task Title" required class="input-field">
+                <textarea name="description" placeholder="Task Description" class="input-field"></textarea>
+                <button type="submit" class="btn add-task-btn">Add Task</button>
+            </form>
+        </div>
+
+      
+        <div class="tasks-container">
+            <ul class="tasks-list">
+                {% for task in tasks %}
+                    <li class="task-item">
+                        <form action="/todos/{{ task._id }}/edit" method="POST" class="task-form">
+                            <input type="text" name="title" value="{{ task.title }}" readonly class="input-field task-title">
+                            <textarea name="description" readonly class="input-field task-description">{{ task.description }}</textarea>
+                            <div class="task-buttons">
+                                <button type="button" class="btn update-task-btn" onclick="enableEdit(this)">Edit</button>
+                                <button type="submit" class="btn save-task-btn">Update</button>
+                            </div>
+                        </form>
+                        <form action="/todos/{{ task._id }}/delete" method="POST" class="delete-task-form">
+                            <button type="submit" class="btn delete-task-btn">Delete</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function enableEdit(button) {
+      
+            const taskForm = button.closest('.task-form');
+            const titleField = taskForm.querySelector('.task-title');
+            const descriptionField = taskForm.querySelector('.task-description');
+            titleField.removeAttribute('readonly');
+            descriptionField.removeAttribute('readonly');
+            titleField.focus();
+        }
+    </script>
+</body>
+</html>
