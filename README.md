@@ -1,6 +1,5 @@
-# To-Do App
 
-#Instructions
+##Instructions
 Link to Hosted Application: https://todoapp-ehmf.onrender.com
 
 To run testcases use the command: pytest test.py
